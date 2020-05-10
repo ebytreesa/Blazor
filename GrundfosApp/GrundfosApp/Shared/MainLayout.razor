@@ -1,15 +1,26 @@
-﻿@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase    
+  
 
-<div class="sidebar">
-    <NavMenu />
-</div>
 
-<div class="main">
-    <div class="top-row px-4">
-        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+@*<Container Fluid="true">
+    <div class="main">
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
     </div>
+</Container>*@
 
-    <div class="content px-4">
-        @Body
-    </div>
-</div>
+<Container Fluid="true" Class="px-4" Style="height:10%;">
+    <Row Style="justify-content:flex-end; ">
+        <image src="https://gografic.dk/wp-content/uploads/2018/04/grundfos-logo.png" style="height:30px;;"/>
+    </Row>    
+</Container>
+
+
+<Container Fluid="true" Class="" Style="height:88%;">
+    @Body
+</Container>
+
+    @*<div class="container-fluid" >
+            @Body
+        </div>*@
