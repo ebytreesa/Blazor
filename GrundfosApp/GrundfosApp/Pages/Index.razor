@@ -1,106 +1,165 @@
 ﻿@page "/"
 
-    <Row Style="border-bottom:1px solid white; padding-bottom:2px;">
-       <a href="/settings">Settings</a>
-    </Row>
-
-    <Row class="dashboard-row" Style=" border: 1px solid black;height:20%;">
-        <h3>DASHBOARD</h3>
-    </Row>
-
-    <Row Style="border: 1px solid black; height:30%;" Class="middle-row">
-        <Column ColumnSize="ColumnSize.Is12" Style="border: 1px solid ; ">
-            <Row>
-                <Column ColumnSize="ColumnSize.Is3" Style=" border: 1px solid green;">
-                    Image
-                </Column>
-
-                <Column ColumnSize="ColumnSize.Is6" Style=" border-right: 1px solid white;">
-                    <Row Style="height:60%;border-bottom:1px solid white; justify-content:center;">
-                        Some text 1
-                    </Row>
-                    <Row Style="height:40%;justify-content:center; padding-bottom:2px;">
-                        Some text 2
-                    </Row>
-                </Column>
-
-                <Column ColumnSize="ColumnSize.Is3" Style=" border: 1px solid green;">
-                    Image
-                </Column>
-            </Row>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is12" Style="border: 1px solid white; height:50%; ">
-            <Row>
-                <Column ColumnSize="ColumnSize.Is6"  Style="border-right:1px solid white;padding-left:25%; " >
-                        <p>some text 3</p>
-                        <h1>3.8</h1>
-                </Column>
-                <Column ColumnSize="ColumnSize.Is6" Style=";padding-left:25%;">
-                    <p>some text 4</p>
-                    <h1>3.8</h1>
-                </Column>
-            </Row>
-        </Column>
-    </Row>
+@using Microsoft.AspNetCore.SignalR.Client
+@using System.Threading;
+@using GrundfosApp.Data
+@inject NavigationManager NavigationManager
+@inject WaterFlow  WaterFlow
+@implements IDisposable
 
 
-    <Row Class="justify-content-center" Style="height:10%;">
-        <p>abcdef hfdskjfld kgjflkgjfdgj </p>
-    </Row>
 
-       
+@*<Row Style="border-bottom:1px solid white; padding-bottom:2px;">
+    <a href="/settings">Settings</a>
+</Row>*@
 
-    <Row Class="bottom-row" Style="height:60%;">
-        <Column ColumnSize="ColumnSize.Is12">
-            <Row Style="margin-bottom:5px; padding:3px; justify-content:center;">
-                <Column ColumnSize="ColumnSize.Is3" Style="background-color:white; height:60%;
+<Row class="dashboard-row" Style=" border: 1px solid black;height:20%;">
+    <h3>DASHBOARD</h3>
+</Row>
+
+<Row Style="border: 1px solid black; height:30%;" Class="middle-row">
+    <Column ColumnSize="ColumnSize.Is12" Style="border: 1px solid ; ">
+        <Row>
+            <Column ColumnSize="ColumnSize.Is3" Style=" border: 1px solid green;">
+                Image
+            </Column>
+
+            <Column ColumnSize="ColumnSize.Is6" Style=" border-right: 1px solid white;">
+                <Row Style="height:60%;border-bottom:1px solid white; justify-content:center;">
+                    Some text 1
+                </Row>
+                <Row Style="height:40%;justify-content:center; padding-bottom:2px;">
+                    Some text 2
+                </Row>
+            </Column>
+
+            <Column ColumnSize="ColumnSize.Is3" Style=" border: 1px solid green;">
+                Image
+            </Column>
+        </Row>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is12" Style="border: 1px solid white; height:50%; ">
+        <Row>
+            <Column ColumnSize="ColumnSize.Is4" Style="border-right:1px solid white;padding-left:15%; ">
+                <h4>Flow:</h4> <h2> @waterflow.WaterPresssure</h2>
+                <h4>Status:</h4><h2> @waterflow.Status</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.Is4" Style="padding-left:15%;border-right:1px solid white;">
+                <h4>Power Usage</h4>
+                <h2>@powerUsage.W</h2>
+                <h4>Status:</h4><h2> @powerUsage.Status</h2>
+            </Column>
+
+            <Column ColumnSize="ColumnSize.Is4" Style="padding-left:15%;">
+                <h4>Frequency </h4>
+                <h2>@frequency.Hz</h2>
+                <h4>Status:</h4><h2> @frequency.Status</h2>
+            </Column>
+        </Row>
+    </Column>
+</Row>
+
+
+<Row Class="justify-content-center" Style="height:10%;">
+    <p>abcdef hfdskjfld kgjflkgjfdgj </p>
+</Row>
+
+
+
+<Row Class="bottom-row" Style="height:60%;">
+    <Column ColumnSize="ColumnSize.Is12">
+        <Row Style="margin-bottom:5px; padding:3px; justify-content:center;">
+            <Column ColumnSize="ColumnSize.Is3" Style="background-color:white; height:60%;
                     color:black; margin-right:3px;">
-                    <p> text 6</p>
-                    <div style="border-radius:5px; background-color:black; color:white;">
-                        here comes the graph
-                    </div>
-                    <p> text 7</p>
+                <p> text 6</p>
+                <div style="border-radius:5px; background-color:black; color:white;">
+                    here comes the graph
+                </div>
+                <p> text 7</p>
 
-                </Column>
+            </Column>
 
-                <Column ColumnSize="ColumnSize.Is3" Style=" background-color: white; height: 60%; color: black;
+            <Column ColumnSize="ColumnSize.Is3" Style=" background-color: white; height: 60%; color: black;
                          margin-right: 3px;">
-                    <p> text 8</p>
-                    <div style="margin:2px;border-radius:5px; background-color:black; color:white;">
-                        here comes the graph
-                    </div>
-                    <p> text</p>
+                <p> text 8</p>
+                <div style="margin:2px;border-radius:5px; background-color:black; color:white;">
+                    here comes the graph
+                </div>
+                <p> text</p>
 
-                </Column>
+            </Column>
 
-                <Column ColumnSize="ColumnSize.Is3" Style="background-color:white; height:60%;
+            <Column ColumnSize="ColumnSize.Is3" Style="background-color:white; height:60%;
                         color:black; ">
-                    <p> text</p>
-                    <div style="margin:2px;border-radius:2px; background-color:black; color:white;">
-                        here comes the graph
-                    </div>
-                    <p> text</p>
+                <p> text</p>
+                <div style="margin:2px;border-radius:2px; background-color:black; color:white;">
+                    here comes the graph
+                </div>
+                <p> text</p>
 
-                </Column>
-            </Row>
-        </Column>
-       
+            </Column>
+        </Row>
+    </Column>
 
-        <Column ColumnSize="ColumnSize.Is12">
-            <Row Class="button-row" Style="padding:10px;">
-                <Column ColumnSize="ColumnSize.Is8" Style="justify-content:center;">
-                    <Button style="background-color:white; color:black; width:80%;">Show settings</Button>
-                </Column>
 
-                <Column ColumnSize="ColumnSize.Is4" Style="justify-content:center;">
-                    <Button style="background-color:white; color:black;">Stop</Button>
-                </Column>
-            </Row>
-        </Column>
-    </Row>
+    <Column ColumnSize="ColumnSize.Is12">
+        <Row Class="button-row" Style="padding:10px;">
+            <Column ColumnSize="ColumnSize.Is8" Style="justify-content:center;">
+                <a href="/settings" class="btn btn-Primaryt btn-lg"  style="background-color:white; color:black; width:80%;">Show Settings</a>
+            </Column>
 
-    
+            <Column ColumnSize="ColumnSize.Is4" Style="justify-content:center;">
+                <Button style="background-color:white; color:black;">Stop</Button>
+            </Column>
+        </Row>
+    </Column>
+</Row>
 
 
 
-    @*<SurveyPrompt Title="How is Blazor working for you?" />*@
+@code {
+
+    private WaterFlow waterflow = new WaterFlow();
+    private PowerUsage powerUsage = new PowerUsage();
+    private Frequency frequency = new Frequency();
+
+    private HubConnection hubConnection;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        hubConnection = new HubConnectionBuilder()
+           .WithUrl(NavigationManager.ToAbsoluteUri("/chatHub"))
+           .Build();
+        await hubConnection.StartAsync();
+        await hubConnection.SendAsync("SendDataInfo");
+
+
+        hubConnection.On<DataService>("ReceiveDataInfo", (dataService) =>
+        {
+            waterflow = dataService.waterflow;
+            powerUsage = dataService.powerUsage;
+            frequency = dataService.frequency;
+            StateHasChanged();
+        });
+
+    }
+
+    public void Dispose()
+    {
+
+
+        waterflow = null;
+        powerUsage = null; 
+    }
+
+}
+
+
+
+
+
+
+@*<SurveyPrompt Title="How is Blazor working for you?" />*@

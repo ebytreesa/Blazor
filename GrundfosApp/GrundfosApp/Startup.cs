@@ -13,6 +13,8 @@ using GrundfosApp.Data;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using GrundfosApp.Hubs;
+using Microsoft.AspNetCore.ResponseCompression;
 
 namespace GrundfosApp
 {
@@ -32,6 +34,15 @@ namespace GrundfosApp
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<DataService>();
+            services.AddSingleton<WaterFlow>();
+
+            services.AddSignalR();
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
             services.AddBlazorise(options =>
             {
                 options.ChangeTextOnKeyPress = true; // optional
@@ -63,6 +74,7 @@ namespace GrundfosApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
+                endpoints.MapHub<ChatHub>("/chatHub");
                 endpoints.MapFallbackToPage("/_Host");
             });
         }
