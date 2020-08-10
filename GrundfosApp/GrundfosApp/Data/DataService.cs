@@ -12,12 +12,13 @@ namespace GrundfosApp.Data
         public PowerUsage powerUsage { get; set; } = new PowerUsage();
         public Frequency frequency { get; set; } = new Frequency();
 
-        public void MeasureFlow()
+        public async Task MeasureFlow()
         {
             var rnd = new Random();
             waterflow.WaterPresssure = rnd.Next(0, 99);
             powerUsage.W = rnd.Next(0, 99);
             frequency.Hz = rnd.Next(0, 99);
+            await Task.Delay(3000);
         }
 
         public Task<WaterFlow> MeasureFlows()

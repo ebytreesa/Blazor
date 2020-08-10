@@ -19,9 +19,9 @@ namespace GrundfosApp.Hubs
             bool stop = true;
             while (stop)
             {
-                dataService.MeasureFlow();
+                await dataService.MeasureFlow();
                 await Clients.All.SendAsync("ReceiveDataInfo", dataService);
-                Thread.Sleep(3000);
+                //await Task.Delay(3000);
             }
         }
 
